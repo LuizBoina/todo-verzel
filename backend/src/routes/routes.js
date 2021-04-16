@@ -1,6 +1,8 @@
 const listController = require('../controllers/listController');
+const userController = require('../controllers/userController');
 
 module.exports = [
+  // LIST ROUTES
   {
     method: 'GET',
     url: '/api/lists',
@@ -41,5 +43,15 @@ module.exports = [
     url: '/api/list/:id',
     handler: listController.deleteList
   },
-  
+  // USER ROUTES
+  {
+    method: 'POST',
+    url: '/api/auth/signup',
+    handler: userController.signUp
+  },
+  {
+    method: 'POST',
+    url: '/api/auth/signin',
+    handler: userController.signIn
+  },
 ]

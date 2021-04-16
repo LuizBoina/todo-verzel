@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useRoutes, navigate } from 'hookrouter';
 import routes from './routes';
 import PageNotFound from './pages/pageNotFound';
-import Header from './header/Header';
+import Header from './components/header';
 import './index.css';
 
 export const AuthContext = React.createContext(null);
@@ -59,7 +59,7 @@ const App = () => {
       navigate('/home');
     }
     else
-      navigate('/auth');
+      navigate('/login');
   }, []);
   const routeResult = useRoutes(routes);
 

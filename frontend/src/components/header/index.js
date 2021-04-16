@@ -1,20 +1,19 @@
 import React from 'react';
-import { navigate } from 'hookrouter';
+// import { navigate } from 'hookrouter';
 
 import './index.css';
+
+// se tiver token no local storage mostra botao de logOut e nome
 
 const Header = () => {
   return (
     <header className='header'>
       <div className='banner'>
         <div>
-          <h2 onClick={() => navigate('/')}>TODO List</h2>
+          <h2>TODO List</h2>
         </div>
         <div>
-          <h4>Olá, Fulano</h4>
-        </div>
-        <div>
-          <h4 onClick={() => navigate('/')}>Log Out</h4>
+          {<h4>Olá, Fulano/Botao para entrar</h4>}
         </div>
       </div>
     </header>

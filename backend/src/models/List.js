@@ -12,12 +12,4 @@ const ListSchema = new moongose.Schema({
   ]
 });
 
-// ListSchema.method('transform', () => {
-//   var obj = this.toObject();
-//     obj.id = obj._id;
-//     delete obj._id;
- 
-//     return obj;
-// });
-
 module.exports = moongose.model('List', ListSchema);

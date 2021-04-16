@@ -8,8 +8,8 @@ const app = fastify({
 
 app.register(require('fastify-cors'), {
     origin: (origin, cb) => {
-        if(/localhost/.test(origin)){
-          //  Request from localhost will pass
+        //  Request from localhost will pass
+        if(/localhost/.test(origin) || !origin){
           cb(null, true)
           return
         }
