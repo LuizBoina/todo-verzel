@@ -17,3 +17,8 @@
   cursor: pointer;
   display: contents;
 }
+
+.login-a {
+  cursor: pointer;
+  color: white;
+}

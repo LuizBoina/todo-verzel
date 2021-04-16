@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { format } from 'date-fns';
+import { useTitle } from 'hookrouter';
 import Modal from '../../components/modal';
 import api from '../../services/api';
+import { getUserId } from '../../services/auth';
 
 import './index.css';
 
@@ -10,6 +12,7 @@ import PlusSvg from '../../assets/svg/plus.svg';
 import MinusSvg from '../../assets/svg/minus.svg';
 
 const Home = () => {
+  useTitle('Tarefas');
 
   const initalState = {
     showModal: '',
@@ -24,7 +27,7 @@ const Home = () => {
   const [state, setState] = useState(initalState);
 
   useEffect(() => {
-    api.get('api/lists').then(res => {
+    api.get(`api/lists/${getUserId()}`).then(res => {
       setData(res.data);
     }).catch(err => {
       console.log(err);
@@ -67,10 +70,12 @@ const Home = () => {
   const dataChangeHandle = (buttonType, idxList, idxTask) => {
     switch (buttonType) {
       case 'SHOW_TASK': {
-        const createdeDate = format(Date.parse(data[idxList].tasks[idxTask].createdDate), 'dd/MM/yyyy kk:mm:ss');
+        const initDate = data[idxList].tasks[idxTask].createdDate;
+        const createdeDate = format(Date.parse(initDate), 'dd/MM/yyyy kk:mm:ss');
         let message = `Data de Criação:     ${createdeDate}\n\n`;
         if (data[idxList].tasks[idxTask].isDone) {
-          const donedDate = format(Date.parse(data[idxList].tasks[idxTask].doneDate), 'dd/MM/yyyy kk:mm:ss');
+          const dDate = data[idxList].tasks[idxTask].doneDate;
+          const donedDate = format(Date.parse(dDate), 'dd/MM/yyyy kk:mm:ss');
           message += `Data de Conclusão:${donedDate}`;
         }
         setState({
@@ -152,14 +157,16 @@ const Home = () => {
     switch (state.showModal) {
       case 'CHECK_TASK':
         try {
+          const ddate = Date();
           const listId = data[state.idxList]._id;
           const idx = {
             taskIdx: state.idxTask,
-            doneDate: Date()
+            doneDate: ddate,
           };
           await api.put(`/api/list/${listId}/task/is_done`, idx);
           const newData = [...data];
-          newData[state.idxList].tasks[state.idxList].isDone = !newData[state.idxList].tasks[state.idxList].isDone;
+          newData[state.idxList].tasks[state.idxTask].isDone = !newData[state.idxList].tasks[state.idxTask].isDone;
+          newData[state.idxList].tasks[state.idxTask].doneDate = ddate;
           setData(newData);
         } catch (err) {
           console.log(err);
@@ -169,6 +176,7 @@ const Home = () => {
         const newList = {
           title: state.inputValue,
           tasks: [],
+          userId: getUserId(),
         }
         try {
           const res = await api.post('api/list', newList);

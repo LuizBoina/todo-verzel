@@ -3,7 +3,8 @@ const boom = require('@hapi/boom');
 
 exports.getLists = async (req, res) => {
   try {
-    const lists = await List.find();
+    const lists = await List.find({ userId: req.params.userId });
+    const alllists = await List.find();
     return lists;
   } catch(err) {
     throw boom.boomify(err);
@@ -13,9 +14,7 @@ exports.getLists = async (req, res) => {
 exports.addNewList = async (req, res) => {
   try {
     const list = new List(req.body);
-    console.log(list);
     const result = list.save();
-    //const result = await List.create(req.body);
     return result;
   } catch(err) {
     throw boom.boomify(err);

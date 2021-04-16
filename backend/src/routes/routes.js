@@ -5,7 +5,7 @@ module.exports = [
   // LIST ROUTES
   {
     method: 'GET',
-    url: '/api/lists',
+    url: '/api/lists/:userId',
     handler: listController.getLists
   },
   {

@@ -1,5 +1,5 @@
 import React from "react";
-import { navigate, A } from "hookrouter";
+import { navigate, A, useTitle } from "hookrouter";
 import DatePicker, { registerLocale } from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,6 +16,8 @@ import './index.css';
 registerLocale('pt', pt);
 
 export const SignUp = () => {
+	useTitle('Cadastro');
+
 	const initialState = {
 		name: "",
 		email: "",
@@ -64,7 +66,6 @@ export const SignUp = () => {
 	};
 
 	const handleDateChange = date => {
-		console.log(date)
 		setData({
 			...data,
 			birthday: date,
@@ -156,7 +157,6 @@ export const SignUp = () => {
 		data.phoneNumber = data.phoneNumber.replace(/\D/g, '');
 		data.cpf = data.cpf.replace(/\D/g, '');
 		data.cep = data.cep.replace(/\D/g, '');
-		console.log(data)
 		try {
 			await api.post("/api/auth/signup", { 
 						name: data.name,

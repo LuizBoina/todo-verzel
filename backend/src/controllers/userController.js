@@ -16,7 +16,6 @@ exports.signUp = async (req, res) => {
                 {cpf: req.body.cpf}
             ]
         });
-        console.log(existingUser)
         if (existingUser) {
             if (existingUser.email === req.body.email)
                 throw new Error('Email já registrado');

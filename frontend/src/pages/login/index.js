@@ -1,13 +1,16 @@
-import React from "react";
-import { AuthContext } from "../../index";
-import { navigate, A } from 'hookrouter';
+import React, { useContext } from "react";
+import { navigate, A, useTitle } from 'hookrouter';
 import { login } from "../../services/auth";
 import api from '../../services/api';
+import AuthContext from '../../services/auth';
 
 import './index.css';
 
 export const Login = () => {
-  const { dispatch } = React.useContext(AuthContext);
+  useTitle('Login');
+
+  const { setIsSigned } = useContext(AuthContext);
+
   const initialState = {
     email: "",
     password: "",
@@ -40,13 +43,14 @@ export const Login = () => {
       
       const res = await api.post("/api/auth/signin", { email: data.email, password: data.password });
       login(res.data);
+      setIsSigned(true);
       navigate('/home');
     } catch (err) {
       console.log(err);
       setData({
         ...data,
         isSubmitting: false,
-        errorMessage: "Email/número e/ou senha não conferem."
+        errorMessage: "Email e/ou senha não conferem."
       });
     }
   };
