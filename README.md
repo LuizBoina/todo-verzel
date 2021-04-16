@@ -3,6 +3,6 @@ Requisitos:
 - MongoDB instalado
 
 Para rodar:
-- rodar setup.sh para rodar `npm i` nas pastas backend e frontend e criar a pasta data em backend para o mongo
+- rodar `bash setup.sh` para rodar 'npm i' nas pastas backend e frontend e criar a pasta data em backend para o mongo
 - abrir dois terminais na pasta backend: rodar `mongod --dbpath data` em um e `npm start` em outro
-- abrir um terminal na pasta frontend e rodar npm start
+- abrir um terminal na pasta frontend e rodar `npm start`
